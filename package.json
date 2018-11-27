@@ -4,6 +4,8 @@
   "description": "philosophize.ai API",
   "main": "handler.js",
   "dependencies": {
+    "aws-sdk": "^2.363.0",
+    "dynamoose": "^1.1.0",
     "sentencer": "^0.1.5"
   },
   "devDependencies": {

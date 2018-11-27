@@ -24,3 +24,11 @@ functions:
           path: ${self:custom.baseUrl}/message
           method: get
           cors: true
+
+  stuff:
+    handler: handler.stuff
+    events:
+      - http:
+          path: ${self:custom.baseUrl}/stuff
+          method: get
+          cors: true
