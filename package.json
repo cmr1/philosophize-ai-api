@@ -1,0 +1,45 @@
+{
+  "name": "philosophize-ai-api",
+  "version": "0.0.1",
+  "description": "philosophize.ai API",
+  "main": "handler.js",
+  "dependencies": {
+    "sentencer": "^0.1.5"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "serverless-offline": "^3.31.3",
+    "standard": "^12.0.1"
+  },
+  "scripts": {
+    "scan": "npm audit",
+    "scan:fix": "npm audit fix",
+    "scan:fix:force": "npm audit fix --force",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "fix": "npm run scan:fix && npm run lint:fix",
+    "fix:force": "npm run scan:fix:force && npm run lint:fix",
+    "pretest": "npm run lint && npm run scan",
+    "test": "echo \"Error: no test specified yet...\" && exit 0",
+    "start": "sls offline start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmr1/philosophize-ai-api.git"
+  },
+  "keywords": [
+    "Philosophize",
+    "AI",
+    "sentence",
+    "generate",
+    "template",
+    "madlib"
+  ],
+  "author": "Charlie McClung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cmr1/philosophize-ai-api/issues"
+  },
+  "homepage": "https://github.com/cmr1/philosophize-ai-api#readme"
+}
