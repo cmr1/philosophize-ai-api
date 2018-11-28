@@ -24,7 +24,6 @@
     "lint:fix": "standard --fix",
     "fix": "npm run scan:fix && npm run lint:fix",
     "fix:force": "npm run scan:fix:force && npm run lint:fix",
-    "pretest": "npm run lint && npm run scan",
     "test": "echo \"Error: no test specified yet...\" && exit 0",
     "start": "sls offline start"
   },

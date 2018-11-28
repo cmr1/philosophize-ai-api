@@ -6,7 +6,7 @@ const REQUIRED_RESPONSE_HEADERS = {
 }
 
 class BaseController {
-  constructor(options = {}) {
+  constructor (options = {}) {
     this.model = options.model
   }
 
@@ -25,8 +25,8 @@ class BaseController {
     return response
   }
 
-  _ok(body, options = {}) {
-    console.log("OK")
+  _ok (body, options = {}) {
+    console.log('OK')
     const response = Object.assign({
       statusCode: 200,
       body
@@ -35,7 +35,7 @@ class BaseController {
     return this._respond(response)
   }
 
-  _bad(body, options = {}) {
+  _bad (body, options = {}) {
     const response = Object.assign({
       statusCode: 400,
       body
@@ -44,8 +44,8 @@ class BaseController {
     return this._respond(response)
   }
 
-  _error(body, options = {}) {
-    console.log("ERROR")
+  _error (body, options = {}) {
+    console.log('ERROR')
     const response = Object.assign({
       statusCode: 500,
       body
@@ -54,7 +54,7 @@ class BaseController {
     return this._respond(response)
   }
 
-  _not_found(body, options = {}) {
+  _not_found (body, options = {}) {
     const response = Object.assign({
       statusCode: 404,
       body
@@ -63,7 +63,7 @@ class BaseController {
     return this._respond(response)
   }
 
-  _unauthorized(body, options = {}) {
+  _unauthorized (body, options = {}) {
     const response = Object.assign({
       statusCode: 401,
       body
@@ -72,7 +72,7 @@ class BaseController {
     return this._respond(response)
   }
 
-  _forbidden(body, options = {}) {
+  _forbidden (body, options = {}) {
     const response = Object.assign({
       statusCode: 401,
       body

@@ -2,7 +2,7 @@ const { Template, Message } = require('../models')
 const BaseController = require('./BaseController')
 
 class MessagesController extends BaseController {
-  constructor() {
+  constructor () {
     super({ model: Message })
   }
 }
