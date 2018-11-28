@@ -17,22 +17,6 @@ custom:
     prefix: dev
 
 functions:
-  message:
-    handler: handler.message
-    events:
-      - http:
-          path: ${self:custom.baseUrl}/message
-          method: get
-          cors: true
-
-  stuff:
-    handler: handler.stuff
-    events:
-      - http:
-          path: ${self:custom.baseUrl}/stuff
-          method: get
-          cors: true
-
   templates-index:
     handler: handler.templates_index
     events:
@@ -137,10 +121,10 @@ functions:
               paths:
                 id: true
 
-  generate:
+  messages-generate:
     handler: handler.templates_generate
     events:
       - http:
-          path: ${self:custom.baseUrl}/generate
+          path: ${self:custom.baseUrl}/messages/generate
           method: get
           cors: true

@@ -12,14 +12,10 @@ class TemplatesController extends BaseController {
     try {
       const all = await this.model.scan().exec()
 
-      // console.log(all)
-
       if (all.length > 0) {
         const template = all[0]
 
         const msg = template.generateMessage()
-
-        // console.log(msg)
 
         await msg.save()
 
