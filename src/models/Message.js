@@ -1,4 +1,4 @@
-const uuidv1 = require('uuid/v1');
+const uuidv1 = require('uuid/v1')
 const dynamoose = require('dynamoose')
 const { Schema } = dynamoose
 
