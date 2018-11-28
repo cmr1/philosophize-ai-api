@@ -15,7 +15,8 @@ module.exports.message = async (event, context) => {
       'Access-Control-Allow-Credentials': true
     },
     body: JSON.stringify({
-      message
+      message,
+      actions: Object.keys(Sentencer.actions)
     })
   }
 }
