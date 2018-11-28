@@ -6,7 +6,9 @@
   "dependencies": {
     "aws-sdk": "^2.363.0",
     "dynamoose": "^1.1.0",
-    "sentencer": "^0.1.5"
+    "fs-extra": "^7.0.1",
+    "sentencer": "^0.1.5",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",

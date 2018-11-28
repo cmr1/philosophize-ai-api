@@ -2,7 +2,7 @@ const Sentencer = require('sentencer')
 const dynamoose = require('dynamoose')
 
 module.exports.message = async (event, context) => {
-  const message = Sentencer.make("This sentence has {{ a_noun }} and {{ an_adjective }} {{ noun }} in it.")
+  const message = Sentencer.make('This sentence has {{ a_noun }} and {{ an_adjective }} {{ noun }} in it.')
 
   console.log(message)
 
@@ -16,7 +16,7 @@ module.exports.message = async (event, context) => {
     },
     body: JSON.stringify({
       message
-    }),
+    })
   }
 }
 
@@ -53,6 +53,6 @@ module.exports.stuff = async (event, context) => {
       allCats,
       badCat,
       message
-    }),
+    })
   }
 }
