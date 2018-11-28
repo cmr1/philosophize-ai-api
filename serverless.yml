@@ -12,7 +12,7 @@ provider:
     - Effect: "Allow"
       Action:
         - "dynamodb:*"
-    - Resource: "*"
+      Resource: "*"
 
 custom:
   version: v1
