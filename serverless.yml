@@ -127,7 +127,7 @@ functions:
                 id: true
 
   messages-generate:
-    handler: handler.templates_generate
+    handler: handler.messages_generate
     events:
       - http:
           path: ${self:custom.baseUrl}/messages/generate

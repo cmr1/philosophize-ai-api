@@ -4,8 +4,8 @@
   "description": "philosophize.ai API",
   "main": "handler.js",
   "dependencies": {
-    "aws-sdk": "^2.363.0",
-    "dynamoose": "^1.1.0",
+    "aws-sdk": "^2.382.0",
+    "dynamoose": "^1.3.0",
     "fs-extra": "^7.0.1",
     "sentencer": "^0.1.5",
     "uuid": "^3.3.2"

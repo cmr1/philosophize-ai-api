@@ -6,11 +6,92 @@ const REQUIRED_RESPONSE_HEADERS = {
 }
 
 class BaseController {
-  constructor (options = {}) {
+  constructor(options = {}) {
     this.model = options.model
   }
 
-  _respond (options) {
+  async _exec(action, event, context) {
+    const {
+      headers,
+      path,
+      pathParameters,
+      requestContext,
+      resource,
+      httpMethod,
+      queryStringParameters,
+      multiValueQueryStringParameters,
+      stageVariables,
+      body,
+      isOffline
+    } = event
+
+    let parsedBody = null
+
+    if (body) {
+      parsedBody = JSON.parse(body)
+
+      if (typeof parsedBody['body'] === 'string') {
+        parsedBody['body'] = parsedBody['body'].replace(/\[\[ ([a-z_]+) \]\]/g, '{{ $1 }}')
+      }
+    }
+
+    switch(action) {
+      case 'index':
+        const all = await this.model.scan().exec()
+        return this._ok(all)
+      case 'create':
+        const newItem = new this.model(parsedBody)
+        await newItem.save()
+        return this._created(newItem)
+      case 'show':
+      case 'update':
+      case 'destroy':
+        if (!pathParameters['id']) {
+          return this._bad()
+        }
+
+        const item = await this.model.get(pathParameters['id'])
+
+        console.log('item is', item)
+
+        if (!item) {
+          return this._not_found()
+        }
+
+        if (action === 'update') {
+          Object.assign(item, parsedBody)
+          await item.save()
+        } else if (action === 'destroy') {
+          await item.delete()
+        }
+
+        return this._ok(item)
+      default:
+        return this._bad()
+    }
+  }
+
+  async index(event, context) {
+    return await this._exec('index', event, context)
+  }
+
+  async create(event, context) {
+    return await this._exec('create', event, context)
+  }
+
+  async show(event, context) {
+    return await this._exec('show', event, context)
+  }
+
+  async update(event, context) {
+    return await this._exec('update', event, context)
+  }
+
+  async destroy(event, context) {
+    return await this._exec('destroy', event, context)
+  }
+
+  _respond (options = {}) {
     const response = {
       statusCode: 400,
       headers: REQUIRED_RESPONSE_HEADERS
@@ -35,10 +116,29 @@ class BaseController {
     return this._respond(response)
   }
 
+  _created (body, options = {}) {
+    console.log('Created')
+    const response = Object.assign({
+      statusCode: 201,
+      body: body || { message: 'Created' }
+    }, options)
+
+    return this._respond(response)
+  }
+
   _bad (body, options = {}) {
     const response = Object.assign({
       statusCode: 400,
-      body
+      body: body || { message: 'Bad Request' }
+    }, options)
+
+    return this._respond(response)
+  }
+
+  _not_found (body, options = {}) {
+    const response = Object.assign({
+      statusCode: 404,
+      body: body || { message: 'Not Found' }
     }, options)
 
     return this._respond(response)
@@ -48,107 +148,10 @@ class BaseController {
     console.log('ERROR')
     const response = Object.assign({
       statusCode: 500,
-      body
+      body: body || { message: 'Unknown Error' }
     }, options)
 
     return this._respond(response)
-  }
-
-  _not_found (body, options = {}) {
-    const response = Object.assign({
-      statusCode: 404,
-      body
-    }, options)
-
-    return this._respond(response)
-  }
-
-  _unauthorized (body, options = {}) {
-    const response = Object.assign({
-      statusCode: 401,
-      body
-    }, options)
-
-    return this._respond(response)
-  }
-
-  _forbidden (body, options = {}) {
-    const response = Object.assign({
-      statusCode: 401,
-      body
-    }, options)
-
-    return this._respond(response)
-  }
-
-  async index (event, context) {
-    // const { id, body } = event
-
-    try {
-      const all = await this.model.scan().exec()
-
-      console.log(this.model, all)
-
-      return this._ok(all)
-    } catch (err) {
-      return this._error(err)
-    }
-  }
-
-  async show (event, context) {
-    const { id } = event
-
-    try {
-      const item = await this.model.get(id)
-
-      return this._ok(item)
-    } catch (err) {
-      return this._error(err)
-    }
-  }
-
-  async destroy (event, context) {
-    const { id } = event
-
-    try {
-      const item = await this.model.get(id)
-
-      await item.delete()
-
-      return this._ok(item)
-    } catch (err) {
-      return this._error(err)
-    }
-  }
-
-  async create (event, context) {
-    const { body } = event
-
-    try {
-      const newItem = new this.model(body)
-
-      await newItem.save()
-
-      return this._ok(newItem)
-    } catch (err) {
-      return this._error(err)
-    }
-  }
-
-  async update (event, context) {
-    const { id, body } = event
-
-    try {
-      const item = await this.model.get(id)
-
-      Object.assign(item, body)
-
-      await item.save()
-
-      return this._ok(item)
-    } catch (err) {
-      return this._error(err)
-    }
   }
 }
 
