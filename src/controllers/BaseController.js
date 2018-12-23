@@ -10,6 +10,10 @@ class BaseController {
     this.model = options.model
   }
 
+  static get REQUIRED_RESPONSE_HEADERS() {
+    return REQUIRED_RESPONSE_HEADERS
+  }
+
   async _exec(action, event, context) {
     const {
       headers,

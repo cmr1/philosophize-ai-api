@@ -1,13 +1,10 @@
-const Sentencer = require('sentencer')
-const dynamoose = require('dynamoose')
-
-const { Message, Template } = require('./src/models')
-const { MessagesController, TemplatesController } = require('./src/controllers')
+const fs = require('fs-extra')
+const { BaseController, MessagesController, TemplatesController } = require('./src/controllers')
 
 templatesController = new TemplatesController()
 messagesController = new MessagesController()
 
-const methods = [ 'index', 'show', 'create', 'update', 'destroy', 'generate' ]
+const methods = [ 'index', 'show', 'create', 'update', 'destroy' ]
 const controllers = {
   templates: templatesController,
   messages: messagesController
@@ -22,3 +19,11 @@ Object.keys(controllers).forEach(model => {
     }
   })
 })
+
+module.exports.spec = async (event, context) => {
+  return {
+    statusCode: 200,
+    headers: BaseController.REQUIRED_RESPONSE_HEADERS,
+    body: fs.readFileSync('spec.yml').toString()
+  }
+}

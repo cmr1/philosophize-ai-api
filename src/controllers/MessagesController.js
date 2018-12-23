@@ -6,7 +6,7 @@ class MessagesController extends BaseController {
     super({ model: Message })
   }
 
-  async generate (event, context) {
+  async create (event, context) {
     const {
       headers,
       path,
@@ -60,7 +60,7 @@ class MessagesController extends BaseController {
 
     await msg.save()
 
-    return this._ok(msg)
+    return this._created(msg)
   }
 }
 
