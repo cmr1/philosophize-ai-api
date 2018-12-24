@@ -1,12 +1,19 @@
-openapi: "3.0.0"
+swagger: "2.0"
 info:
-  version: 0.0.1
   title: philosophize.ai api
+  description: philosophize.ai api docs
+  version: 0.0.1
   license:
     name: MIT
-  description: philosophize
-servers:
-  - url: http://localhost:4000/dev/api/v1
+host: localhost:4000
+basePath: /dev/api/v1
+tags:
+- name: templates
+  description: Templates
+- name: messages
+  description: Messages
+schemes:
+- http
 paths:
   /templates:
     get:
@@ -14,46 +21,48 @@ paths:
       operationId: listTemplates
       tags:
         - templates
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Templates"
-        default:
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Template"
+        500:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
     post:
       summary: Create a new Template
       operationId: createTemplate
       tags:
         - templates
-      requestBody:
-        description: New Template
-        required: true
-        content:
-          application/json:
-            schema:
-              properties:
-                body:
-                  type: string
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: body
+          name: body
+          description: New Template body
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Templates"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Template"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
   /templates/{id}:
     get:
       summary: Get a single Template
@@ -65,34 +74,25 @@ paths:
           in: path
           required: true
           description: Template ID (uuid)
-          schema:
-            type: string
-            format: uuid
+          type: string
+          format: uuid
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Template"
+          schema:
+            $ref: "#/definitions/Template"
         400:
           description: Bad Request. Missing id in path?
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         404:
           description: Not Found. Template with given id does not exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
     put:
       summary: Update a Template
       operationId: updateTemplate
@@ -103,43 +103,31 @@ paths:
           in: path
           required: true
           description: Template ID (uuid)
+          type: string
+          format: uuid
+        - name: body
+          in: body
+          required: true
+          description: Updated Template body
           schema:
             type: string
-            format: uuid
-      requestBody:
-        description: Updated Template
-        required: true
-        content:
-          application/json:
-            schema:
-              properties:
-                body:
-                  type: string
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Template"
+          schema:
+            $ref: "#/definitions/Template"
         400:
           description: Bad Request. Missing id in path?
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         404:
           description: Not Found. Template with given id does not exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
     delete:
       summary: Delete a Template
       operationId: deleteTemplate
@@ -150,34 +138,25 @@ paths:
           in: path
           required: true
           description: Template ID (uuid)
-          schema:
-            type: string
-            format: uuid
+          type: string
+          format: uuid
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Template"
+          schema:
+            $ref: "#/definitions/Template"
         400:
           description: Bad Request. Missing id in path?
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         404:
           description: Not Found. Template with given id does not exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
   /messages:
     get:
       summary: List Messages
@@ -187,16 +166,14 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Messages"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Message"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
     post:
       summary: Create a new Message
       operationId: createMessage
@@ -207,33 +184,25 @@ paths:
         - name: template_id
           in: query
           description: Template to generate Message from
-          schema:
-            type: string
-            format: uuid
+          type: string
+          format: uuid
         - name: template_body
           in: query
           description: New Template body to generate Message from
-          schema:
-            type: string
+          type: string
       responses:
         200:
           description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Messages"
+          schema:
+            $ref: "#/definitions/Message"
         404:
           description: Given template_id not found.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
   /messages/{id}:
     get:
       summary: Get a single Message
@@ -245,34 +214,25 @@ paths:
           in: path
           required: true
           description: Message ID (uuid)
-          schema:
-            type: string
-            format: uuid
+          type: string
+          format: uuid
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
+          schema:
+            $ref: "#/definitions/Message"
         400:
           description: Bad Request. Missing id in path?
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         404:
           description: Not Found. Message with given id does not exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
     put:
       summary: Update a Message
       operationId: updateMessage
@@ -283,43 +243,31 @@ paths:
           in: path
           required: true
           description: Message ID (uuid)
+          type: string
+          format: uuid
+        - name: body
+          in: body
+          required: true
+          description: Updated Message body
           schema:
             type: string
-            format: uuid
-      requestBody:
-        description: Updated Message
-        required: true
-        content:
-          application/json:
-            schema:
-              properties:
-                body:
-                  type: string
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
+          schema:
+            $ref: "#/definitions/Message"
         400:
           description: Bad Request. Missing id in path?
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         404:
           description: Not Found. Message with given id does not exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
     delete:
       summary: Delete a Message
       operationId: deleteMessage
@@ -330,71 +278,53 @@ paths:
           in: path
           required: true
           description: Message ID to GET (uuid format)
-          schema:
-            type: string
-            format: uuid
+          type: string
+          format: uuid
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
+          schema:
+            $ref: "#/definitions/Message"
         400:
           description: Bad Request. Missing id in path?
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         404:
           description: Not Found. Message with given id does not exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-components:
-  schemas:
-    Template:
-      required:
-        - id
-        - body
-      properties:
-        id:
-          type: string
-          format: uuid
-        body:
-          type: string
-    Templates:
-      type: array
-      items:
-        $ref: "#/components/schemas/Template"
-    Message:
-      required:
-        - id
-        - template_id
-        - body
-      properties:
-        id:
-          type: string
-          format: uuid
-        template_id:
-          type: string
-          format: uuid
-        body:
-          type: string
-    Messages:
-      type: array
-      items:
-        $ref: "#/components/schemas/Message"
-    Error:
-      required:
-        - message
-      properties:
-        message:
-          type: string
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Template:
+    required:
+      - id
+      - body
+    properties:
+      id:
+        type: string
+        format: uuid
+      body:
+        type: string
+  Message:
+    required:
+      - id
+      - template_id
+      - body
+    properties:
+      id:
+        type: string
+        format: uuid
+      template_id:
+        type: string
+        format: uuid
+      body:
+        type: string
+  Error:
+    required:
+      - message
+    properties:
+      message:
+        type: string
