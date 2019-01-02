@@ -4,6 +4,7 @@
   "description": "philosophize.ai API",
   "main": "handler.js",
   "dependencies": {
+    "@bowtie/api-resource": "0.0.1",
     "aws-sdk": "^2.382.0",
     "dynamoose": "^1.3.0",
     "fs-extra": "^7.0.1",
@@ -24,7 +25,8 @@
     "lint:fix": "standard --fix",
     "fix": "npm run scan:fix && npm run lint:fix",
     "fix:force": "npm run scan:fix:force && npm run lint:fix",
-    "test": "echo \"Error: no test specified yet...\" && exit 0",
+    "test": "mocha test/**/*.spec.js",
+    "prestart": "docker run -d -p 8000:8000 amazon/dynamodb-local",
     "start": "sls offline start"
   },
   "repository": {

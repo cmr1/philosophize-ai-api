@@ -1,5 +1,5 @@
 const uuidv1 = require('uuid/v1')
-const dynamoose = require('dynamoose')
+const { dynamoose } = require('../config')
 const { Schema } = dynamoose
 const { Message } = require('./')
 const Sentencer = require('sentencer')

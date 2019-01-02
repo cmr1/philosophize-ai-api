@@ -8,6 +8,8 @@ provider:
   runtime: nodejs8.10
   region: us-east-1
   profile: ${opt:aws-profile, "cmr1"}
+  environment:
+    LOCAL_DYNAMO: yes
   iamRoleStatements:
     - Effect: "Allow"
       Action:
