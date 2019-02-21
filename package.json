@@ -26,8 +26,9 @@
     "fix": "npm run scan:fix && npm run lint:fix",
     "fix:force": "npm run scan:fix:force && npm run lint:fix",
     "test": "mocha test/**/*.spec.js",
-    "prestart": "docker run -d -p 8000:8000 amazon/dynamodb-local",
-    "start": "sls offline start"
+    "prestart": "docker-compose up -d",
+    "start": "sls offline start",
+    "poststart": "docker-compose stop"
   },
   "repository": {
     "type": "git",
