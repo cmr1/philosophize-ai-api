@@ -27,7 +27,7 @@
     "fix:force": "npm run scan:fix:force && npm run lint:fix",
     "test": "mocha test/**/*.spec.js",
     "prestart": "docker-compose up -d",
-    "start": "sls offline start",
+    "start": "LOCAL_DYNAMO=yes sls offline start",
     "poststart": "docker-compose stop"
   },
   "repository": {
