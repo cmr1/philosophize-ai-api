@@ -5,7 +5,7 @@ info:
   version: 0.0.1
   license:
     name: MIT
-host: localhost:4000
+host: 7tbssw2r83.execute-api.us-east-1.amazonaws.com
 basePath: /dev/api/v1
 tags:
 - name: templates
@@ -13,7 +13,7 @@ tags:
 - name: messages
   description: Messages
 schemes:
-- http
+- https
 paths:
   /templates:
     get:
