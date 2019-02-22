@@ -2,6 +2,7 @@ service: philosophize-ai-api # NOTE: update this with your service name
 
 plugins:
   - serverless-offline
+  # - serverless-domain-manager
 
 provider:
   name: aws
@@ -20,6 +21,11 @@ custom:
   serverless-offline:
     port: 4000
     prefix: dev
+  # customDomain:
+  #   domainName: api.philosophize.ai
+  #   basePath: ''
+  #   stage: ${self:provider.stage}
+  #   createRoute53Record: true
 
 functions:
   spec:
