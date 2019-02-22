@@ -6,7 +6,7 @@ info:
   license:
     name: MIT
 host: 7tbssw2r83.execute-api.us-east-1.amazonaws.com
-basePath: /dev/api/v1
+basePath: /production/api/v1
 tags:
 - name: templates
   description: Templates
