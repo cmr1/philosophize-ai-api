@@ -17,6 +17,11 @@ const MessageSchema = new Schema({
   body: {
     type: String,
     validate: (msg) => msg.trim() !== ''
+  },
+  votes: {
+    type: Number,
+    required: true,
+    default: 0
   }
 })
 

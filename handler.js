@@ -4,7 +4,7 @@ const { BaseController, MessagesController, TemplatesController } = require('./s
 templatesController = new TemplatesController()
 messagesController = new MessagesController()
 
-const methods = [ 'index', 'show', 'create', 'update', 'destroy' ]
+const methods = [ 'index', 'show', 'create', 'update', 'destroy', 'upvote', 'downvote' ]
 const controllers = {
   templates: templatesController,
   messages: messagesController

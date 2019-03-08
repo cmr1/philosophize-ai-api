@@ -102,6 +102,30 @@ functions:
               paths:
                 id: true
 
+  messages-upvote:
+    handler: handler.messages_upvote
+    events:
+      - http:
+          path: ${self:custom.baseUrl}/messages/{id}/upvote
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                id: true
+
+  messages-downvote:
+    handler: handler.messages_downvote
+    events:
+      - http:
+          path: ${self:custom.baseUrl}/messages/{id}/downvote
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                id: true
+
   messages-create:
     handler: handler.messages_create
     events:

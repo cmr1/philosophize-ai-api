@@ -53,7 +53,7 @@ class MessagesController extends BaseController {
     }
 
     if (!template) {
-      return this._not_found(`No template to generate message!`)
+      return this._not_found({ message: `No template to generate message!` })
     }
 
     const msg = template.generateMessage()
@@ -61,6 +61,72 @@ class MessagesController extends BaseController {
     await msg.save()
 
     return this._created(msg)
+  }
+
+  async upvote (event, context) {
+    const {
+      headers,
+      path,
+      pathParameters,
+      requestContext,
+      resource,
+      httpMethod,
+      queryStringParameters,
+      multiValueQueryStringParameters,
+      stageVariables,
+      body,
+      isOffline
+    } = event
+
+    if (!pathParameters['id']) {
+      return this._bad()
+    }
+
+    const item = await this.model.get(pathParameters['id'])
+
+    console.log('item is', item)
+
+    if (!item) {
+      return this._not_found()
+    }
+
+    Object.assign(item, { votes: item.votes + 1 })
+    await item.save()
+
+    return this._ok(item)
+  }
+
+  async downvote (event, context) {
+    const {
+      headers,
+      path,
+      pathParameters,
+      requestContext,
+      resource,
+      httpMethod,
+      queryStringParameters,
+      multiValueQueryStringParameters,
+      stageVariables,
+      body,
+      isOffline
+    } = event
+
+    if (!pathParameters['id']) {
+      return this._bad()
+    }
+
+    const item = await this.model.get(pathParameters['id'])
+
+    console.log('item is', item)
+
+    if (!item) {
+      return this._not_found()
+    }
+
+    Object.assign(item, { votes: item.votes - 1 })
+    await item.save()
+
+    return this._ok(item)
   }
 }
 
